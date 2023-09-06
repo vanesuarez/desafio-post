@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let lastnameInput = document.getElementById("lastname").value;
     let dateInput = document.getElementById("date").value;
 
-    // Se crea un array con cada value como elemento
+    // Se crea un objeto con cada value como elemento
     const values = {
       name: nameInput,
       lastname: lastnameInput,
@@ -21,15 +21,18 @@ document.addEventListener("DOMContentLoaded", function () {
       method: "POST",
       body: JSON.stringify(values), // propiedad body pasa cadena JSON como input
       headers: {
-        "Content-type": "application/json; charset=UTF-8", // indica que el contenido enviado es JSON
+        "Content-Type": "application/json; charset=UTF-8", // indica que el contenido enviado es JSON
       },
     })
       .then(function (response) { // Hace la solicitud
+        if (!response.ok) {
+          throw new Error("La solicitud no pudo completarse correctamente.");
+        }
         return response.json();
       })
 
       .then(function (data) { // Muestra los datos en la consola
-        console.log(data);
+        console.log("Respuesta del servidor:", data);
 
       })
       .catch((error) => console.error("Error:", error));
